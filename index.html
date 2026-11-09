@@ -1,56 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wearing Aesthetic Clothing</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head>
-<body class="light-mode" id="theme-body">
+const themeSwitch = document.getElementById('theme-switch');
+const body = document.getElementById('theme-body');
+const activeModeText = document.getElementById('active-mode-text');
 
-    <header class="header">
-        <div class="logo-container">
-            <h1 class="brand-name">WEARING AESTHETIC</h1>
-        </div>
-        
-        <button class="theme-switch" id="theme-switch">
-            <span class="mode-text">Mode:</span> 
-            <span class="active-mode">Light</span> | Dark
-        </button>
-    </header>
+// Function to update button text based on current theme
+function updateThemeUI(isDark) {
+    if (isDark) {
+        activeModeText.textContent = 'Dark';
+    } else {
+        activeModeText.textContent = 'Light';
+    }
+}
 
-    <main class="product-showcase">
-        <div class="product-grid">
-            <div class="product-card">
-                <div class="image-box">
-                    <img src="user_tshirt_1.png" alt="Aesthetic Tee" class="product-image">
-                </div>
-                <h3 class="product-title">AESTHETIC VINTAGE TEE (BLACK, M)</h3>
-                <p class="product-price">3899/-</p>
-                <button class="add-to-cart">Add to Cart</button>
-            </div>
+// Check saved theme from localStorage on load
+const currentTheme = localStorage.getItem('theme');
+if (currentTheme === 'dark-mode') {
+    body.classList.remove('light-mode');
+    body.classList.add('dark-mode');
+    updateThemeUI(true);
+} else {
+    body.classList.remove('dark-mode');
+    body.classList.add('light-mode');
+    updateThemeUI(false);
+}
 
-            <div class="product-card">
-                <div class="image-box">
-                    <img src="user_tshirt_2.png" alt="Boxy Fit Cargo" class="product-image">
-                </div>
-                <h3 class="product-title">BOXY FIT CARGO SHORTS (OFF-WHITE, L)</h3>
-                <p class="product-price">5999/-</p>
-                <button class="add-to-cart">Add to Cart</button>
-            </div>
-        </div>
-    </main>
-
-    <footer class="footer">
-        <div class="social-links">
-            <a href="https://careditsofficial.blogspot.com/" target="_blank" class="social-icon" title="Blog"><i class="fas fa-blog"></i></a>
-            <a href="https://www.youtube.com/@WebCrafterStudio" target="_blank" class="social-icon" title="YouTube"><i class="fab fa-youtube"></i></a>
-            <a href="https://www.instagram.com/webcraftercorner/" target="_blank" class="social-icon" title="Instagram"><i class="fab fa-instagram"></i></a>
-        </div>
-        <p class="copyright">&copy; Wearing Aesthetic 2026. All rights reserved.</p>
-    </footer>
-
-    <script src="script.js"></script>
-</body>
-</html>
+// Theme switch event listener
+themeSwitch.addEventListener('click', function() {
+    if (body.classList.contains('light-mode')) {
+        body.classList.remove('light-mode');
+        body.classList.add('dark-mode');
+        localStorage.setItem('theme', 'dark-mode');
+        updateThemeUI(true);
+    } else {
+        body.classList.remove('dark-mode');
+        body.classList.add('light-mode');
+        localStorage.setItem('theme', 'light-mode');
+        updateThemeUI(false);
+    }
+});
