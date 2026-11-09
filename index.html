@@ -1,39 +1,68 @@
-const themeSwitch = document.getElementById('theme-switch');
-const body = document.getElementById('theme-body');
-const activeModeText = document.getElementById('active-mode-text');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wearing Aesthetic Clothing</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="light-mode" id="theme-body">
 
-// Function to update button text based on current theme
-function updateThemeUI(isDark) {
-    if (isDark) {
-        activeModeText.textContent = 'Dark';
-    } else {
-        activeModeText.textContent = 'Light';
-    }
-}
+    <!-- Top Moving Announcement Bar -->
+    <div class="announcement-bar">
+        <div class="marquee-content">
+            <span>⚡ FREE SHIPPING ACROSS INDIA ON ORDERS OVER ₹2999/-</span>
+            <span>🔥 NEW AESTHETIC COLLECTION DROPPING SOON</span>
+            <span>✨ USE CODE: AESTHETIC10 FOR SPECIAL PERKS</span>
+        </div>
+    </div>
 
-// Check saved theme from localStorage on load
-const currentTheme = localStorage.getItem('theme');
-if (currentTheme === 'dark-mode') {
-    body.classList.remove('light-mode');
-    body.classList.add('dark-mode');
-    updateThemeUI(true);
-} else {
-    body.classList.remove('dark-mode');
-    body.classList.add('light-mode');
-    updateThemeUI(false);
-}
+    <header class="header">
+        <div class="logo-container">
+            <h1 class="brand-name">WEARING AESTHETIC</h1>
+        </div>
+        
+        <button class="theme-switch" id="theme-switch" aria-label="Toggle Theme">
+            <span class="mode-text">Mode:</span> 
+            <span class="active-mode" id="active-mode-text">Light</span>
+        </button>
+    </header>
 
-// Theme switch event listener
-themeSwitch.addEventListener('click', function() {
-    if (body.classList.contains('light-mode')) {
-        body.classList.remove('light-mode');
-        body.classList.add('dark-mode');
-        localStorage.setItem('theme', 'dark-mode');
-        updateThemeUI(true);
-    } else {
-        body.classList.remove('dark-mode');
-        body.classList.add('light-mode');
-        localStorage.setItem('theme', 'light-mode');
-        updateThemeUI(false);
-    }
-});
+    <main class="product-showcase">
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="image-box">
+                    <img src="user_tshirt_1.png" alt="Aesthetic Tee" class="product-image">
+                </div>
+                <h3 class="product-title">AESTHETIC VINTAGE TEE (BLACK, M)</h3>
+                <p class="product-price">3899/-</p>
+                <div class="dropping-soon-badge">Dropping Soon</div>
+            </div>
+
+            <div class="product-card">
+                <div class="image-box">
+                    <img src="user_tshirt_2.png" alt="Boxy Fit Cargo" class="product-image">
+                </div>
+                <h3 class="product-title">BOXY FIT CARGO SHORTS (OFF-WHITE, L)</h3>
+                <p class="product-price">5999/-</p>
+                <div class="dropping-soon-badge">Dropping Soon</div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="social-links">
+            <a href="mailto:himankwork64@gmail.com" class="social-icon icon-email" title="Drop an Email"><i class="fa-solid fa-envelope"></i></a>
+            <a href="https://yt.openinapp.co/30zfj" target="_blank" class="social-icon icon-yt" title="YouTube Channel"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://www.facebook.com/profile.php?id=61595652995816" target="_blank" class="social-icon icon-fb" title="Facebook Page"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://www.linkedin.com/in/himank-anand-013916446/" target="_blank" class="social-icon icon-linkedin" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="https://www.instagram.com/webcraftercorner/" target="_blank" class="social-icon icon-insta" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.fiverr.com/sellers/webcrafterhere?utm_medium=shared&utm_source=copy_link&utm_campaign=seller_profile_self_view&utm_term=lrrKPBe" target="_blank" class="social-icon icon-fiverr" title="Hire on Fiverr"><i class="fa-solid fa-briefcase"></i></a>
+        </div>
+        <p class="copyright">&copy; Wearing Aesthetic 2026. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
