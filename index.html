@@ -1,76 +1,227 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wearing Aesthetic Clothing</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body id="theme-body">
+const productsData = [
+    {
+        id: 1,
+        name: "AESTHETIC VINTAGE TEE (BLACK, M)",
+        price: 3899,
+        oldPrice: 4999,
+        img: "user_tshirt_1.png",
+        desc: "Heavyweight 240GSM cotton vintage washed tee with custom minimalist typography and boxy streetwear fit."
+    },
+    {
+        id: 2,
+        name: "BOXY FIT CARGO SHORTS (OFF-WHITE, L)",
+        price: 5999,
+        oldPrice: 7499,
+        img: "user_tshirt_2.png",
+        desc: "Premium utility cargo shorts featuring durable hardware, relaxed tailoring, and understated aesthetic branding."
+    },
+    {
+        id: 3,
+        name: "MINIMALIST OVERSIZED HOODIE (CHARCOAL)",
+        price: 4899,
+        oldNum: 6499,
+        oldPrice: 6499,
+        img: "user_tshirt_1.png",
+        desc: "Ultra-plush fleece hoodie built with double-layered hood and clean drop-shoulder cinematic silhouette."
+    },
+    {
+        id: 4,
+        name: "STREETWEAR GRAPHIC TEE (WHITE)",
+        price: 2999,
+        oldPrice: 3999,
+        img: "user_tshirt_2.png",
+        desc: "Breathable combed cotton tee with high-density aesthetic back graphic print."
+    }
+];
 
-    <!-- Automatic Rotating Announcement Bar -->
-    <div class="announcement-bar">
-        <div class="announcement-text" id="rotating-announcement">⚡ FREE SHIPPING ACROSS INDIA ON ORDERS OVER ₹2999/-</div>
-    </div>
+let cart = JSON.parse(localStorage.getItem('wearing_aesthetic_cart')) || [];
 
-    <!-- Header with Clickable Logo Redirection & Nav -->
-    <header class="header">
-        <div class="header-left">
-            <a href="index.html" class="logo-link">
-                <h1 class="brand-name">WEARING AESTHETIC</h1>
-            </a>
-        </div>
+function saveCart() {
+    localStorage.setItem('wearing_aesthetic_cart', JSON.stringify(cart));
+}
 
-        <nav class="header-nav">
-            <a href="index.html" class="nav-link">Collections</a>
-            <a href="#" class="nav-link">Track Your Order</a>
-            <a href="#" class="nav-link">Contact Us</a>
-            <a href="#" class="nav-link">Shop All</a>
-            <a href="#" class="nav-link sale-link">Season end Sale</a>
-        </nav>
+function renderProducts() {
+    const container = document.getElementById('product-grid-container');
+    if(!container) return;
+    container.innerHTML = '';
 
-        <div class="header-right">
-            <button class="icon-btn" title="Search" aria-label="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
-            <button class="icon-btn" title="Account" aria-label="Account"><i class="fa-regular fa-user"></i></button>
-            <button class="icon-btn cart-btn" title="Cart" aria-label="Cart"><i class="fa-solid fa-bag-shopping"></i><span class="cart-badge">0</span></button>
-        </div>
-    </header>
-
-    <main class="product-showcase">
-        <div class="product-grid">
-            <div class="product-card">
-                <div class="image-box">
-                    <img src="user_tshirt_1.png" alt="Aesthetic Tee" class="product-image">
-                </div>
-                <h3 class="product-title">AESTHETIC VINTAGE TEE (BLACK, M)</h3>
-                <p class="product-price">3899/-</p>
-                <div class="dropping-soon-badge">Dropping Soon</div>
+    productsData.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.innerHTML = `
+            <span class="sale-badge">Drop</span>
+            <div class="product-img-box" onclick="openProductModal(${p.id})">
+                <img src="${p.img}" alt="${p.name}">
             </div>
-
-            <div class="product-card">
-                <div class="image-box">
-                    <img src="user_tshirt_2.png" alt="Boxy Fit Cargo" class="product-image">
-                </div>
-                <h3 class="product-title">BOXY FIT CARGO SHORTS (OFF-WHITE, L)</h3>
-                <p class="product-price">5999/-</p>
-                <div class="dropping-soon-badge">Dropping Soon</div>
+            <div class="product-name" onclick="openProductModal(${p.id})">${p.name}</div>
+            <div class="price-line">
+                <span class="old-price">₹${p.oldPrice}.00</span>
+                <span class="new-price">₹${p.price}.00</span>
             </div>
-        </div>
-    </main>
+            <button class="add-cart-btn" onclick="addToCart('${p.name}', ${p.price}, ${p.oldPrice}, '${p.img}')">Add to cart</button>
+        `;
+        container.appendChild(card);
+    });
+}
 
-    <footer class="footer">
-        <div class="social-links">
-            <a href="mailto:himankwork64@gmail.com" class="social-icon icon-email" title="Drop an Email"><i class="fa-solid fa-envelope"></i></a>
-            <a href="https://yt.openinapp.co/30zfj" target="_blank" class="social-icon icon-yt" title="YouTube Channel"><i class="fa-brands fa-youtube"></i></a>
-            <a href="https://www.facebook.com/profile.php?id=61595652995816" target="_blank" class="social-icon icon-fb" title="Facebook Page"><i class="fa-brands fa-facebook"></i></a>
-            <a href="https://www.linkedin.com/in/himank-anand-013916446/" target="_blank" class="social-icon icon-linkedin" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
-            <a href="https://www.instagram.com/webcraftercorner/" target="_blank" class="social-icon icon-insta" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-            <a href="https://www.fiverr.com/sellers/webcrafterhere?utm_medium=shared&utm_source=copy_link&utm_campaign=seller_profile_self_view&utm_term=lrrKPBe" target="_blank" class="social-icon icon-fiverr" title="Hire on Fiverr"><i class="fa-solid fa-briefcase"></i></a>
-        </div>
-        <p class="copyright">&copy; Wearing Aesthetic 2026. All rights reserved.</p>
-    </footer>
+function openProductModal(productId) {
+    const p = productsData.find(item => item.id === productId);
+    if (!p) return;
 
-    <script src="script.js"></script>
-</body>
-</html>
+    document.getElementById('modal-product-img').src = p.img;
+    document.getElementById('modal-product-title').innerText = p.name;
+    document.getElementById('modal-old-price').innerText = `₹${p.oldPrice}.00`;
+    document.getElementById('modal-new-price').innerText = `₹${p.price}.00`;
+    document.getElementById('modal-product-desc').innerText = p.desc;
+    
+    document.getElementById('modal-add-btn').onclick = function() {
+        addToCart(p.name, p.price, p.oldPrice, p.img);
+        closeProductModal();
+    };
+
+    document.getElementById('modal-buynow-btn').onclick = function() {
+        addToCart(p.name, p.price, p.oldPrice, p.img);
+        closeProductModal();
+        goToCheckout();
+    };
+
+    document.getElementById('product-modal-overlay').classList.add('active');
+}
+
+function closeProductModal(event) {
+    if (!event || event.target.id === 'product-modal-overlay' || event.target.className === 'modal-close-btn') {
+        document.getElementById('product-modal-overlay').classList.remove('active');
+    }
+}
+
+function addToCart(name, price, oldPrice, img) {
+    const existing = cart.find(item => item.name === name);
+    if (existing) {
+        existing.qty += 1;
+    } else {
+        cart.push({ name, price, oldPrice, img, qty: 1 });
+    }
+    saveCart();
+    updateCartUI();
+    openCart();
+}
+
+function updateQty(index, change) {
+    cart[index].qty += change;
+    if (cart[index].qty <= 0) {
+        cart.splice(index, 1);
+    }
+    saveCart();
+    updateCartUI();
+}
+
+function removeItem(index) {
+    cart.splice(index, 1);
+    saveCart();
+    updateCartUI();
+}
+
+function updateCartUI() {
+    const cartList = document.getElementById('cart-list');
+    const checkoutItemsList = document.getElementById('checkout-items-list');
+    const floatCount = document.getElementById('float-cart-count');
+    const headerCount = document.getElementById('header-cart-count');
+    
+    let totalItems = 0;
+    let subtotal = 0;
+    let totalSavings = 0;
+
+    if(cartList) cartList.innerHTML = '';
+    if(checkoutItemsList) checkoutItemsList.innerHTML = '';
+
+    cart.forEach((item, index) => {
+        totalItems += item.qty;
+        subtotal += item.price * item.qty;
+        totalSavings += (item.oldPrice - item.price) * item.qty;
+
+        if(cartList) {
+            const row = document.createElement('div');
+            row.className = 'cart-item-row';
+            row.innerHTML = `
+                <img src="${item.img}" class="cart-item-img" alt="">
+                <div class="cart-item-info">
+                    <h4>${item.name}</h4>
+                    <div class="cart-item-price">₹${item.price}.00</div>
+                    <div class="qty-box">
+                        <button class="qty-btn" onclick="updateQty(${index}, -1)">-</button>
+                        <span class="qty-val">${item.qty}</span>
+                        <button class="qty-btn" onclick="updateQty(${index}, 1)">+</button>
+                    </div>
+                    <div class="cart-item-total">₹${item.price * item.qty}.00</div>
+                </div>
+                <i class="fa-solid fa-xmark remove-icon" onclick="removeItem(${index})"></i>
+            `;
+            cartList.appendChild(row);
+        }
+
+        if(checkoutItemsList) {
+            const checkRow = document.createElement('div');
+            checkRow.className = 'checkout-item-row';
+            checkRow.innerHTML = `
+                <span>${item.name} (x${item.qty})</span>
+                <span style="font-weight:700;">₹${item.price * item.qty}.00</span>
+            `;
+            checkoutItemsList.appendChild(checkRow);
+        }
+    });
+
+    if(floatCount) floatCount.innerText = totalItems;
+    if(headerCount) headerCount.innerText = totalItems;
+    
+    document.getElementById('subtotal-amount').innerText = `₹${subtotal}.00`;
+    document.getElementById('savings-amount').innerText = `₹${totalSavings}.00`;
+    document.getElementById('checkout-total').innerText = `₹${subtotal}.00`;
+
+    const pageSub = document.getElementById('checkout-page-subtotal');
+    const pageSav = document.getElementById('checkout-page-savings');
+    const pageTot = document.getElementById('checkout-page-total');
+    
+    if(pageSub) pageSub.innerText = `₹${subtotal}.00`;
+    if(pageSav) pageSav.innerText = `₹${totalSavings}.00`;
+    if(pageTot) pageTot.innerText = `₹${subtotal}.00`;
+}
+
+function openCart() {
+    document.getElementById('cart-drawer').classList.add('open');
+    document.getElementById('cart-overlay').classList.add('active');
+}
+
+function closeCart() {
+    document.getElementById('cart-drawer').classList.remove('open');
+    document.getElementById('cart-overlay').classList.remove('active');
+}
+
+function goToCheckout() {
+    if(cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
+    }
+    closeCart();
+    document.getElementById('shop-view-container').style.display = 'none';
+    document.getElementById('checkout-page-view').classList.add('active');
+    window.scrollTo(0,0);
+}
+
+function showShopView() {
+    document.getElementById('checkout-page-view').classList.remove('active');
+    document.getElementById('shop-view-container').style.display = 'block';
+    window.scrollTo(0,0);
+}
+
+function completeOrder() {
+    alert("Order placed successfully! Thank you for shopping with Wearing Aesthetic Clothing.");
+    cart = [];
+    saveCart();
+    updateCartUI();
+    showShopView();
+}
+
+window.onload = function() {
+    renderProducts();
+    updateCartUI();
+};
