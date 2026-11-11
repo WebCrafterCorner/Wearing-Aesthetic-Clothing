@@ -19,9 +19,8 @@ const productsData = [
         id: 3,
         name: "MINIMALIST OVERSIZED HOODIE (CHARCOAL)",
         price: 4899,
-        oldNum: 6499,
         oldPrice: 6499,
-        img: "user_tshirt_1.png",
+        img: "user_tshirt_3.png",
         desc: "Ultra-plush fleece hoodie built with double-layered hood and clean drop-shoulder cinematic silhouette."
     },
     {
@@ -29,7 +28,7 @@ const productsData = [
         name: "STREETWEAR GRAPHIC TEE (WHITE)",
         price: 2999,
         oldPrice: 3999,
-        img: "user_tshirt_2.png",
+        img: "user_tshirt_4.png",
         desc: "Breathable combed cotton tee with high-density aesthetic back graphic print."
     }
 ];
