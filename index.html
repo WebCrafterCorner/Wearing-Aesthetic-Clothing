@@ -7,26 +7,34 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="light-mode" id="theme-body">
+<body id="theme-body">
 
-    <!-- Top Moving Announcement Bar -->
+    <!-- Automatic Rotating Announcement Bar -->
     <div class="announcement-bar">
-        <div class="marquee-content">
-            <span>⚡ FREE SHIPPING ACROSS INDIA ON ORDERS OVER ₹2999/-</span>
-            <span>🔥 NEW AESTHETIC COLLECTION DROPPING SOON</span>
-            <span>✨ USE CODE: AESTHETIC10 FOR SPECIAL PERKS</span>
-        </div>
+        <div class="announcement-text" id="rotating-announcement">⚡ FREE SHIPPING ACROSS INDIA ON ORDERS OVER ₹2999/-</div>
     </div>
 
+    <!-- Header with Clickable Logo Redirection & Nav -->
     <header class="header">
-        <div class="logo-container">
-            <h1 class="brand-name">WEARING AESTHETIC</h1>
+        <div class="header-left">
+            <a href="index.html" class="logo-link">
+                <h1 class="brand-name">WEARING AESTHETIC</h1>
+            </a>
         </div>
-        
-        <button class="theme-switch" id="theme-switch" aria-label="Toggle Theme">
-            <span class="mode-text">Mode:</span> 
-            <span class="active-mode" id="active-mode-text">Light</span>
-        </button>
+
+        <nav class="header-nav">
+            <a href="index.html" class="nav-link">Collections</a>
+            <a href="#" class="nav-link">Track Your Order</a>
+            <a href="#" class="nav-link">Contact Us</a>
+            <a href="#" class="nav-link">Shop All</a>
+            <a href="#" class="nav-link sale-link">Season end Sale</a>
+        </nav>
+
+        <div class="header-right">
+            <button class="icon-btn" title="Search" aria-label="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <button class="icon-btn" title="Account" aria-label="Account"><i class="fa-regular fa-user"></i></button>
+            <button class="icon-btn cart-btn" title="Cart" aria-label="Cart"><i class="fa-solid fa-bag-shopping"></i><span class="cart-badge">0</span></button>
+        </div>
     </header>
 
     <main class="product-showcase">
