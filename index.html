@@ -1,227 +1,227 @@
-const productsData = [
-    {
-        id: 1,
-        name: "AESTHETIC VINTAGE TEE (BLACK, M)",
-        price: 3899,
-        oldPrice: 4999,
-        img: "user_tshirt_1.png",
-        desc: "Heavyweight 240GSM cotton vintage washed tee with custom minimalist typography and boxy streetwear fit."
-    },
-    {
-        id: 2,
-        name: "BOXY FIT CARGO SHORTS (OFF-WHITE, L)",
-        price: 5999,
-        oldPrice: 7499,
-        img: "user_tshirt_2.png",
-        desc: "Premium utility cargo shorts featuring durable hardware, relaxed tailoring, and understated aesthetic branding."
-    },
-    {
-        id: 3,
-        name: "MINIMALIST OVERSIZED HOODIE (CHARCOAL)",
-        price: 4899,
-        oldNum: 6499,
-        oldPrice: 6499,
-        img: "user_tshirt_1.png",
-        desc: "Ultra-plush fleece hoodie built with double-layered hood and clean drop-shoulder cinematic silhouette."
-    },
-    {
-        id: 4,
-        name: "STREETWEAR GRAPHIC TEE (WHITE)",
-        price: 2999,
-        oldPrice: 3999,
-        img: "user_tshirt_2.png",
-        desc: "Breathable combed cotton tee with high-density aesthetic back graphic print."
-    }
-];
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wearing Aesthetic Clothing</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-let cart = JSON.parse(localStorage.getItem('wearing_aesthetic_cart')) || [];
+    <!-- Top Announcement Bar -->
+    <div class="top-bar">
+        ⚡ FREE SHIPPING ACROSS INDIA ON ORDERS OVER <span>₹2999/-</span>
+    </div>
 
-function saveCart() {
-    localStorage.setItem('wearing_aesthetic_cart', JSON.stringify(cart));
-}
+    <!-- Header -->
+    <header>
+        <a href="index.html" class="logo">WEARING<span>-AESTHETIC</span></a>
+        <ul class="nav-links">
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="#featured">COLLECTIONS</a></li>
+            <li><a href="#" onclick="alert('Wearing Aesthetic Clothing brings you elite streetwear with cinematic minimalist luxury.'); return false;">ABOUT US</a></li>
+            <li><a href="mailto:himankwork64@gmail.com">CONTACT US</a></li>
+        </ul>
+        <button class="cart-header-btn" onclick="openCart()">
+            <i class="fa-solid fa-bag-shopping"></i> Cart <span id="header-cart-count" style="background:#fff; color:#0284c7; padding:1px 6px; border-radius:10px; font-size:11px; margin-left:4px;">0</span>
+        </button>
+    </header>
 
-function renderProducts() {
-    const container = document.getElementById('product-grid-container');
-    if(!container) return;
-    container.innerHTML = '';
+    <!-- Main Shop View Container -->
+    <div id="shop-view-container">
+        <!-- Hero Banner -->
+        <div class="hero">
+            <h1>Wearing Aesthetic Clothing</h1>
+            <p>Redefining streetwear fashion with clean minimalism and luxury styling.</p>
+            <a href="#featured" class="shop-btn">Shop Collection</a>
+        </div>
 
-    productsData.forEach(p => {
-        const card = document.createElement('div');
-        card.className = 'product-card';
-        card.innerHTML = `
-            <span class="sale-badge">Drop</span>
-            <div class="product-img-box" onclick="openProductModal(${p.id})">
-                <img src="${p.img}" alt="${p.name}">
+        <!-- Container -->
+        <div class="container">
+            <!-- Category Boxes -->
+            <h2 class="section-title">Categories</h2>
+            <div class="categories-grid">
+                <a href="#featured" class="category-box">Vintage Tees</a>
+                <a href="#featured" class="category-box">Boxy Fit Cargo</a>
+                <a href="#featured" class="category-box">Oversized Hoodies</a>
+                <a href="#featured" class="category-box">Streetwear Bottoms</a>
             </div>
-            <div class="product-name" onclick="openProductModal(${p.id})">${p.name}</div>
-            <div class="price-line">
-                <span class="old-price">₹${p.oldPrice}.00</span>
-                <span class="new-price">₹${p.price}.00</span>
-            </div>
-            <button class="add-cart-btn" onclick="addToCart('${p.name}', ${p.price}, ${p.oldPrice}, '${p.img}')">Add to cart</button>
-        `;
-        container.appendChild(card);
-    });
-}
 
-function openProductModal(productId) {
-    const p = productsData.find(item => item.id === productId);
-    if (!p) return;
+            <!-- Featured Products Grid -->
+            <h2 class="section-title" id="featured">Featured Drop</h2>
+            <div class="product-grid" id="product-grid-container"></div>
+        </div>
+    </div>
 
-    document.getElementById('modal-product-img').src = p.img;
-    document.getElementById('modal-product-title').innerText = p.name;
-    document.getElementById('modal-old-price').innerText = `₹${p.oldPrice}.00`;
-    document.getElementById('modal-new-price').innerText = `₹${p.price}.00`;
-    document.getElementById('modal-product-desc').innerText = p.desc;
-    
-    document.getElementById('modal-add-btn').onclick = function() {
-        addToCart(p.name, p.price, p.oldPrice, p.img);
-        closeProductModal();
-    };
-
-    document.getElementById('modal-buynow-btn').onclick = function() {
-        addToCart(p.name, p.price, p.oldPrice, p.img);
-        closeProductModal();
-        goToCheckout();
-    };
-
-    document.getElementById('product-modal-overlay').classList.add('active');
-}
-
-function closeProductModal(event) {
-    if (!event || event.target.id === 'product-modal-overlay' || event.target.className === 'modal-close-btn') {
-        document.getElementById('product-modal-overlay').classList.remove('active');
-    }
-}
-
-function addToCart(name, price, oldPrice, img) {
-    const existing = cart.find(item => item.name === name);
-    if (existing) {
-        existing.qty += 1;
-    } else {
-        cart.push({ name, price, oldPrice, img, qty: 1 });
-    }
-    saveCart();
-    updateCartUI();
-    openCart();
-}
-
-function updateQty(index, change) {
-    cart[index].qty += change;
-    if (cart[index].qty <= 0) {
-        cart.splice(index, 1);
-    }
-    saveCart();
-    updateCartUI();
-}
-
-function removeItem(index) {
-    cart.splice(index, 1);
-    saveCart();
-    updateCartUI();
-}
-
-function updateCartUI() {
-    const cartList = document.getElementById('cart-list');
-    const checkoutItemsList = document.getElementById('checkout-items-list');
-    const floatCount = document.getElementById('float-cart-count');
-    const headerCount = document.getElementById('header-cart-count');
-    
-    let totalItems = 0;
-    let subtotal = 0;
-    let totalSavings = 0;
-
-    if(cartList) cartList.innerHTML = '';
-    if(checkoutItemsList) checkoutItemsList.innerHTML = '';
-
-    cart.forEach((item, index) => {
-        totalItems += item.qty;
-        subtotal += item.price * item.qty;
-        totalSavings += (item.oldPrice - item.price) * item.qty;
-
-        if(cartList) {
-            const row = document.createElement('div');
-            row.className = 'cart-item-row';
-            row.innerHTML = `
-                <img src="${item.img}" class="cart-item-img" alt="">
-                <div class="cart-item-info">
-                    <h4>${item.name}</h4>
-                    <div class="cart-item-price">₹${item.price}.00</div>
-                    <div class="qty-box">
-                        <button class="qty-btn" onclick="updateQty(${index}, -1)">-</button>
-                        <span class="qty-val">${item.qty}</span>
-                        <button class="qty-btn" onclick="updateQty(${index}, 1)">+</button>
-                    </div>
-                    <div class="cart-item-total">₹${item.price * item.qty}.00</div>
+    <!-- Dedicated WooCommerce Checkout Page View -->
+    <div class="checkout-page-container" id="checkout-page-view">
+        <h2 style="font-family:'Montserrat', sans-serif; font-weight:800; margin-bottom:25px; font-size:28px;">Checkout</h2>
+        <div class="checkout-grid">
+            <!-- Left: Form -->
+            <div class="checkout-form-box">
+                <h3>Contact Information</h3>
+                <div class="form-group">
+                    <label>Email address</label>
+                    <input type="email" placeholder="himankwork64@gmail.com" value="himankwork64@gmail.com">
                 </div>
-                <i class="fa-solid fa-xmark remove-icon" onclick="removeItem(${index})"></i>
-            `;
-            cartList.appendChild(row);
-        }
 
-        if(checkoutItemsList) {
-            const checkRow = document.createElement('div');
-            checkRow.className = 'checkout-item-row';
-            checkRow.innerHTML = `
-                <span>${item.name} (x${item.qty})</span>
-                <span style="font-weight:700;">₹${item.price * item.qty}.00</span>
-            `;
-            checkoutItemsList.appendChild(checkRow);
-        }
-    });
+                <h3 style="margin-top: 25px;">Billing address</h3>
+                <div class="form-group">
+                    <label>Country / Region</label>
+                    <select>
+                        <option>India</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>First name</label>
+                        <input type="text" placeholder="First name">
+                    </div>
+                    <div class="form-group">
+                        <label>Last name</label>
+                        <input type="text" placeholder="Last name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Address</label>
+                    <input type="text" placeholder="House number and street name">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>City</label>
+                        <input type="text" placeholder="Town / City">
+                    </div>
+                    <div class="form-group">
+                        <label>State</label>
+                        <select>
+                            <option>Uttar Pradesh</option>
+                            <option>Delhi</option>
+                            <option>Maharashtra</option>
+                            <option>Karnataka</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>PIN Code</label>
+                        <input type="text" placeholder="PIN code">
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="text" placeholder="Phone number">
+                    </div>
+                </div>
 
-    if(floatCount) floatCount.innerText = totalItems;
-    if(headerCount) headerCount.innerText = totalItems;
-    
-    document.getElementById('subtotal-amount').innerText = `₹${subtotal}.00`;
-    document.getElementById('savings-amount').innerText = `₹${totalSavings}.00`;
-    document.getElementById('checkout-total').innerText = `₹${subtotal}.00`;
+                <h3 style="margin-top: 25px;">Payment options</h3>
+                <label class="payment-option-box">
+                    <input type="radio" name="payment" checked> Direct bank transfer
+                </label>
+                <label class="payment-option-box">
+                    <input type="radio" name="payment"> Cash on delivery
+                </label>
 
-    const pageSub = document.getElementById('checkout-page-subtotal');
-    const pageSav = document.getElementById('checkout-page-savings');
-    const pageTot = document.getElementById('checkout-page-total');
-    
-    if(pageSub) pageSub.innerText = `₹${subtotal}.00`;
-    if(pageSav) pageSav.innerText = `₹${totalSavings}.00`;
-    if(pageTot) pageTot.innerText = `₹${subtotal}.00`;
-}
+                <button class="place-order-btn" onclick="completeOrder()">Place Order</button>
+            </div>
 
-function openCart() {
-    document.getElementById('cart-drawer').classList.add('open');
-    document.getElementById('cart-overlay').classList.add('active');
-}
+            <!-- Right: Order Summary -->
+            <div class="checkout-summary-box">
+                <h3>Order summary</h3>
+                <div id="checkout-items-list"></div>
 
-function closeCart() {
-    document.getElementById('cart-drawer').classList.remove('open');
-    document.getElementById('cart-overlay').classList.remove('active');
-}
+                <div style="margin-top: 20px;">
+                    <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:6px; color:#64748b;">
+                        <span>Subtotal:</span>
+                        <span id="checkout-page-subtotal">₹0.00</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:6px; color:#166534; font-weight:600;">
+                        <span>Total Savings:</span>
+                        <span id="checkout-page-savings">₹0.00</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; font-size:18px; font-weight:800; color:#1e3a8a; border-top:1px solid #e2e8f0; padding-top:12px; margin-top:8px;">
+                        <span>Total:</span>
+                        <span id="checkout-page-total">₹0.00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-function goToCheckout() {
-    if(cart.length === 0) {
-        alert("Your cart is empty!");
-        return;
-    }
-    closeCart();
-    document.getElementById('shop-view-container').style.display = 'none';
-    document.getElementById('checkout-page-view').classList.add('active');
-    window.scrollTo(0,0);
-}
+    <!-- Floating Cart Button -->
+    <div class="floating-cart" onclick="openCart()">
+        <span class="floating-cart-count" id="float-cart-count">0</span>
+        <i class="fa-solid fa-bag-shopping" style="font-size: 18px;"></i>
+    </div>
 
-function showShopView() {
-    document.getElementById('checkout-page-view').classList.remove('active');
-    document.getElementById('shop-view-container').style.display = 'block';
-    window.scrollTo(0,0);
-}
+    <!-- Product Details Modal (Popup with Add to Cart & Buy Now) -->
+    <div class="product-modal-overlay" id="product-modal-overlay" onclick="closeProductModal(event)">
+        <div class="product-modal" onclick="event.stopPropagation()">
+            <button class="modal-close-btn" onclick="closeProductModal()">&times;</button>
+            <div class="modal-img-col">
+                <img id="modal-product-img" src="" alt="Product">
+            </div>
+            <div class="modal-info-col">
+                <h2 class="modal-title" id="modal-product-title"></h2>
+                <div class="modal-prices">
+                    <span class="old-price" id="modal-old-price"></span>
+                    <span class="new-price" id="modal-new-price"></span>
+                </div>
+                <p class="modal-desc" id="modal-product-desc"></p>
+                <div class="modal-btn-group">
+                    <button class="add-cart-btn" style="background:#f59e0b; color:#111; font-weight:700;" id="modal-add-btn">Add to Cart</button>
+                    <button class="add-cart-btn" style="background:#0284c7; color:#fff;" id="modal-buynow-btn">Buy Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-function completeOrder() {
-    alert("Order placed successfully! Thank you for shopping with Wearing Aesthetic Clothing.");
-    cart = [];
-    saveCart();
-    updateCartUI();
-    showShopView();
-}
+    <!-- Cart Drawer -->
+    <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+    <div class="cart-drawer" id="cart-drawer">
+        <div class="cart-alert">
+            <i class="fa-solid fa-circle-check"></i> Item added to cart successfully
+        </div>
+        <div class="cart-items-list" id="cart-list"></div>
+        <div class="cart-footer-box">
+            <div class="trust-badges">
+                <div class="badge-item"><i class="fa-solid fa-shield-halved"></i> Secure Checkout</div>
+                <div class="badge-item"><i class="fa-solid fa-truck-fast"></i> Fast Shipping</div>
+                <div class="badge-item"><i class="fa-solid fa-rotate-left"></i> Easy Returns</div>
+            </div>
+            <div class="savings-line">
+                <span>Your savings on this order:</span>
+                <span id="savings-amount">₹0.00</span>
+            </div>
+            <div class="subtotal-line">
+                <span>Subtotal:</span>
+                <span id="subtotal-amount">₹0.00</span>
+            </div>
+            <div class="cart-actions">
+                <div class="btn-flex-group">
+                    <button class="btn-dark" onclick="closeCart()">View Cart</button>
+                    <button class="btn-dark" onclick="closeCart()">Continue Shopping</button>
+                </div>
+                <button class="btn-dark" style="background-color: #0284c7;" onclick="goToCheckout()">
+                    Checkout – <span id="checkout-total">₹0.00</span>
+                </button>
+            </div>
+        </div>
+    </div>
 
-window.onload = function() {
-    renderProducts();
-    updateCartUI();
-};
+    <!-- Footer -->
+    <footer style="background:#0f172a; color:#fff; text-align:center; padding:30px 20px; margin-top:60px;">
+        <div style="margin-bottom:15px; display:flex; justify-content:center; gap:20px; font-size:18px;">
+            <a href="mailto:himankwork64@gmail.com" style="color:#fff;"><i class="fa-solid fa-envelope"></i></a>
+            <a href="https://www.youtube.com/@WebCrafterStudio" target="_blank" style="color:#fff;"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://www.facebook.com/profile.php?id=61595652995816" target="_blank" style="color:#fff;"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://www.linkedin.com/in/himank-anand-013916446/" target="_blank" style="color:#fff;"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="https://www.instagram.com/webcraftercorner/" target="_blank" style="color:#fff;"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.fiverr.com/sellers/webcrafterhere" target="_blank" style="color:#fff;"><i class="fa-solid fa-briefcase"></i></a>
+        </div>
+        <p style="font-size:13px; color:#94a3b8;">&copy; 2026 Wearing Aesthetic Clothing. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
